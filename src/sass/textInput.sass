@@ -1,0 +1,46 @@
+@import main.sass
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus
+  outline: none
+
+
+.text_input_container
+  max-width: 704px
+
+input[type=text]
+  border-color: transparent
+
+input[type=text]:focus, :active, ::-moz-focus-inner
+  border-color: transparent
+
+#projectDesc
+  -webkit-appearance: none
+  max-width: 704px
+  width: 100%
+  border-color: $themeColor_text_input_1
+  border-width: 0 0 1px 0
+  color: $themeColor_text_input_1
+  background: $themeColor_background_2
+  @include input_placeholder_text
+
+  padding-bottom: 10px
+
+#projectDesc_label
+  display: none
+  color: $themeColor_text_input_1
+
+#projectDesc:focus, :active
+  border-color: white
+  outline-width: 0
+
+
+
+
+
+
+
+
+
