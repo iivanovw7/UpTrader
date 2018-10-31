@@ -1,0 +1,198 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
+  <title>Test webpage</title>
+</head>
+
+<body>
+
+<header id="header">
+  <div id="drawer"></div>
+  <div class="menuIcon_container ripple">
+    <svg id="menuBtn" height="36" width="36">
+      <line x1="0" y1="10" x2="32" y2="10"/>
+      <line x1="0" y1="18" x2="32" y2="18"/>
+      <line x1="16" y1="26" x2="32" y2="26"/>
+    </svg>
+  </div>
+</header>
+
+<div id="form">
+  <div class="formTitle">
+    <p>Расскажите о своем проекте, и мы предложим решение, которое подойдет для задач вашей компании</p>
+  </div>
+  <div class="formProjectType_container">
+    <p>Тип проекта</p>
+    <div>
+      <button class="btn_form_project">Система или сервис</button>
+      <button class="btn_form_project">Сайт</button>
+      <button class="btn_form_project">Другое</button>
+    </div>
+  </div>
+  <div class="formServices_container">
+    <p>Услуги</p>
+    <div>
+      <button class="btn_form">Бизнес-аналитика</button>
+      <button class="btn_form">Дизайн</button>
+      <button class="btn_form">Разработка и интеграция</button>
+      <button class="btn_form">Поддержка</button>
+    </div>
+  </div>
+  <div class="formRangeSelectors_container">
+    <div class="sliderContainer">
+      <p>Планируемый бюджет</p>
+      <div>
+        <input title="budget_set" type="range" min="1" max="3" value="1" class="slider" id="selBudget">
+        <p class="resultsContainer"><span id="selBudget_result"></span>
+          <svg fill="white" height="20px" width="20px" version="1.1"
+            id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 550 550" style="enable-background:new 0 0 550 550" xml:space="preserve">
+                <path d="M232.522,242.428c63.913,0,115.91-54.382,115.91-121.227C348.432,54.37,296.435,0,232.522,0H120.568v282.428h-29v30h29V440
+		                h30V312.428h101.955v-30H150.568v-40H232.522z M150.568,30h81.955c47.371,0,85.91,40.912,85.91,91.201
+		                c0,50.303-38.539,91.227-85.91,91.227h-81.955V30z"/>
+      </svg>
+        </p>
+      </div>
+    </div>
+    <div class="sliderContainer">
+      <p>Сроки</p>
+      <div>
+        <input title="deadline_set" type="range" min="1" max="12" value="1" class="slider" id="selDeadline">
+        <p class="resultsContainer"><span id="selDeadline_result"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+
+<script>
+
+  //budget selector
+
+  let selBudget_slider = document.getElementById("selBudget");
+  let selBudget_output = document.getElementById("selBudget_result");
+  selBudget_output.innerHTML = "до 1 млн";
+
+  selBudget_slider.oninput = function() {
+    let i = this.value;
+    console.log(i);
+
+    switch(true) {
+      case (i == 1):
+        selBudget_output.innerHTML = "до 1 млн";
+        break;
+      case (i == 2):
+        selBudget_output.innerHTML = "1-5 млн";
+        break;
+      case (i == 3):
+        selBudget_output.innerHTML = "> 5 млн";
+        break;
+      default:
+        selBudget_output.innerHTML = "до 1 млн";
+    }
+
+  };
+
+  //deadline selector
+  let selDeadline_slider = document.getElementById("selDeadline");
+  let selDeadline_output = document.getElementById("selDeadline_result");
+
+  ageSp = (index) => {
+    let text = 'месяцев';
+
+    ((index % 100) <= 20) && (index % 100) >= 5 ? (text = 'месяцев') :
+      (index % 10) == 1 ? (text = 'месяц') :
+        ((index % 10) >= 2) && ((index % 10) <= 4) ? (text = 'месяца') :
+          (text = 'месяцев');
+
+    return text;
+  };
+
+  selDeadline_output.innerHTML = selDeadline_slider.value + " " + ageSp(selDeadline_slider.value);
+
+  selDeadline_slider.oninput = function() {
+    selDeadline_output.innerHTML = this.value + " " + ageSp(this.value);
+  };
+
+  let tracks = [
+    '-webkit-slider-runnable-track',
+  ];
+
+  let thumbs = [
+    '-webkit-slider-thumb',
+  ];
+
+
+  function initSliders() {
+    let sliders = document.querySelectorAll('input[type=range]');
+    let testAndWK = window.getComputedStyle(sliders[0],'::-webkit-slider-thumb').background;
+    for (let i=0;i<sliders.length;i+=1) {
+      if (!testAndWK) {
+        sliders[i].style.WebkitAppearance = 'slider-horizontal';
+      }
+
+      // prepare a <style> tag that will be used by handleSlider()
+
+      let st = document.createElement('style');
+      st.id = 's' + sliders[i].id;
+      document.head.appendChild(st);
+
+
+      sliders[i].addEventListener('input',function () {handleSlider(this)},false);
+      sliders[i].addEventListener('change',function () {handleSlider(this)},false);
+
+      sliders[i].output = sliders[i].parentNode.querySelector('output');
+      let dataSpan = sliders[i].parentNode.querySelector('span');
+      if (dataSpan && dataSpan.getAttribute('data-labels')) {
+        sliders[i].values = [];
+        let values = dataSpan.getAttribute('data-labels').split(';');
+        for (let j=0;j<values.length;j+=1) {
+          sliders[i].values.push(values[j]);
+        }
+      }
+
+
+      if (sliders[i].value*1) {
+        handleSlider(sliders[i]);
+      }
+    }
+  }
+
+
+
+  initSliders();
+
+  function handleSlider(slider) {
+
+    // this sets the gradient for one slider to the correct color stops
+    // needs a prepared <style> tag created by initSliders()
+
+    let gradValue = Math.round((slider.value/slider.getAttribute('max')*1)*100);
+    let grad = 'linear-gradient(90deg,#5082e0 ' + gradValue + '%,#cccccc ' + (gradValue+1) + '%)';
+    let rangeSelector = 'input[id='+slider.id+']::';
+    let styleString = '';
+    let printedValue = (slider.values) ? slider.values[slider.value] : slider.value;
+    //slider.output.innerHTML = printedValue;
+    for (let j=0;j<tracks.length;j+=1) {
+      styleString += rangeSelector + tracks[j] + '{background: ' + grad + ';} ';
+    }
+    document.getElementById('s'+slider.id).textContent = styleString;
+  }
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>

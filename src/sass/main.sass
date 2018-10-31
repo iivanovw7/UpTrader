@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css?family=Exo+2')
+
+
+// mixin
+@mixin form_main_text
+  color: #FFFFFF
+  font-family: 'Exo 2', sans-serif
+  font-size: 36px
+  font-weight: 300
+  line-height: 48px
+
+@mixin form_element_text
+  font-family: 'Exo 2', sans-serif
+  color: #FFFFFF
+  font-size: 16px
+  font-weight: 300
+  line-height: 24px
+
+@mixin form_button_active_text
+  color: #FFFFFF
+  font-family: "Exo 2"
+  font-size: 20px
+  font-weight: 300
+  text-align: center
+
+@mixin rippleEffect
+  position: relative
+  overflow: hidden
+  transform: translate3d(0, 0, 0)
+  z-index: 10000
+
+  &:after
+    content: ""
+    display: block
+    position: absolute
+    width: 100%
+    height: 100%
+    top: 0%
+    left: 0%
+    pointer-events: none
+    background-image: radial-gradient(circle, #ffffff 10%, transparent 10.01%)
+    background-repeat: no-repeat
+    background-position: 50%
+    transform: scale(10,10)
+    opacity: 0
+    transition: transform .5s, opacity 1s
+
+
+
+  &:active:after
+    transform: scale(0,0)
+    opacity: .2
+    transition: 0s
+
+//main styles
+*
+  box-sizing: border-box
+
+html
+  background-color: #191919
+
+body
+  display: flex
+  min-height: 100vh
+  flex-direction: column
+  margin: 0 auto
+  max-width: 1440px
+  background-color: #1f1f1f
+
+.menuIcon_container
+  height: 48px
+  width: 48px
+  border-radius: 50%
+  display: flex
+  align-items: center
+
+//fake drawer content
+#drawer
+  @include form_element_text
+
+//header container and menu icon
+header
+  display: flex
+  flex-wrap: nowrap
+  flex-direction: row
+  max-height: 50px
+  justify-content: space-between
+  padding: 20px 3% 0 3%
+
+  svg
+    stroke: #5c00eb
+    stroke-width: 3.5
+    margin: 0 auto
+    display: block
+
+    &:hover
+      stroke: #717bdf
+      cursor: pointer
+
+//form styles
+.formTitle
+  max-width: 1200px
+  width: 100%
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  padding: 0 5% 5px 8%
+
+.formTitle > p
+  @include form_main_text
+
+.formProjectType_container,
+.formServices_container
+  padding: 0 5% 5px 8%
+  display: flex
+  flex-direction: column
+
+
+  p:first-child
+    @include form_element_text
+    margin-bottom: 5px
+
+  div
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+.formRangeSelectors_container
+  padding: 0 5% 5px 8%
+  display: flex
+  flex-direction: row
+  margin-top: 0
+
+  p:first-child
+    @include form_element_text
+    margin-bottom: 5px
+
+
+//buttons
+
+.btn_form.active, .btn_form_project.active
+  @include form_button_active_text
+  margin: 20px 20px 20px 0
+  height: 48px
+  min-width: 235px
+  border-radius: 4px
+  padding-left: 10px
+  padding-right: 10px
+
+  &:hover
+    border: 1px solid #1f43cb
+    background-color: #1f43cb
+    cursor: pointer
+
+  border: 1px solid #1F48E7
+  background-color: #1F48E7
+
+
+.btn_form, .btn_form_project
+  @include form_button_active_text
+  margin: 20px 20px 20px 0
+  height: 48px
+  min-width: 235px
+  border-radius: 4px
+  padding-left: 10px
+  padding-right: 10px
+
+  &:hover
+    background-color: #373737
+    border: 1px solid #373737
+    cursor: pointer
+
+  background-color: #474747
+  border: 1px solid #474747
+
+.btn_form, .btn_form_project::-moz-focus-inner
+  outline: 0
+
+
+
+
+//@media screen and (max-width: 575px)
+
+
+.ripple
+  @include rippleEffect
