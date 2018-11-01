@@ -74,18 +74,63 @@
         <label id="projectDesc_label">label</label>
         <input id="projectDesc" type="text" placeholder="Опишите задачу">
     </div>
-    <div class="file_uploader_container">
-      <div class="file_upload">
+  </div>
+  <div class="file_uploader_container">
+    <div class="uploader_links_wrapper">
+      <div class="file_upload_link">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="24" viewBox="0 0 12 24">
           <defs><path id="4ehha" d="M132.38 808.464H134v12.497a5.974 5.974 0 0 1-.797 3.032 5.96 5.96 0 0 1-2.17 2.197c-.915.54-1.913.81-2.994.81-1.08 0-2.083-.27-3.006-.81a6.133 6.133 0 0 1-2.21-2.197 5.827 5.827 0 0 1-.823-3.032v-13.569c0-.784.2-1.512.601-2.183.401-.67.937-1.207 1.608-1.608a4.18 4.18 0 0 1 2.183-.601c.784 0 1.508.196 2.17.588.662.392 1.19.928 1.582 1.608.392.68.588 1.412.588 2.196v11.425c0 .488-.122.941-.366 1.36-.244.418-.57.749-.98.993-.41.244-.859.366-1.347.366s-.945-.122-1.372-.366a2.787 2.787 0 0 1-1.02-.994 2.582 2.582 0 0 1-.379-1.359v-10.353h1.647v10.353c0 .314.109.57.327.771.218.2.483.3.797.3.314 0 .571-.1.771-.3.2-.2.301-.457.301-.771v-11.425c0-.488-.122-.945-.366-1.372a2.787 2.787 0 0 0-.993-1.02 2.582 2.582 0 0 0-1.36-.38c-.488 0-.941.127-1.36.38a2.893 2.893 0 0 0-1.006 1.02 2.65 2.65 0 0 0-.379 1.372v13.569c0 .784.2 1.516.601 2.196.401.68.937 1.22 1.608 1.62a4.18 4.18 0 0 0 2.183.602c.785 0 1.508-.2 2.17-.601.662-.401 1.19-.941 1.582-1.621.392-.68.588-1.412.588-2.196z"/>
-          </defs><g><g transform="translate(-122 -803)"><use fill="#fff" xlink:href="#4ehha"/></g></g>
+          </defs><g><g transform="translate(-122 -803)"><use xlink:href="#4ehha"/></g></g>
         </svg>
         <p>Прикрепить файл</p>
       </div>
-      <div></div>
-      <div></div>
+      <div class="uploader_description_mobile">
+        <p>Можно загрузить файлы <br/>
+          и документы в формате pdf, <br/>
+          jpeg, png, tiff <br/>
+          Максимальный размер - 30 МБ
+        </p>
+      </div>
+      <div class="file_uploaded_link">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="24" viewBox="0 0 12 12">
+          <defs><path id="4nl3a" d="M338.146 809.854a.5.5 0 1 1 .708-.708l5.146 5.147 5.146-5.147a.5.5 0 1 1 .708.708L344.707 815l5.147 5.146a.5.5 0 1 1-.708.708L344 815.707l-5.146 5.147a.5.5 0 1 1-.708-.708l5.147-5.146z"/></defs>
+          <g><g transform="translate(-338 -809)"><use xlink:href="#4nl3a"/></g></g></svg>
+        <p>filename1.*</p>
+      </div>
+    </div>
+    <div class="uploader_description">
+      <p>Можно загрузить файлы <br/>
+        и документы в формате pdf, <br/>
+        jpeg, png, tiff <br/>
+        Максимальный размер - 30 МБ
+      </p>
     </div>
   </div>
+  <div class="contacts_container">
+    <label>Как с вами связаться</label>
+    <div class="contacts_inputs_wrapper">
+      <div class="text_input_container">
+        <label id="name_input_label">Имя</label>
+        <input id="name_input" type="text" placeholder="Имя">
+      </div>
+      <div class="text_input_container">
+        <label id="phone_input_label">Телефон</label>
+        <input id="phone_input" type="text" placeholder="Телефон">
+      </div>
+    </div>
+  </div>
+  <div class="submitForm_wrapper">
+    <div>
+      <button type="submit" class="btn_submit">Отправить запрос</button>
+      <div class="uploader_description">
+        <p>
+          Нажимая на кнопку, вы даете согласие на обработку персональных <br/>
+          данных и соглашаетесь с политикой конфиденциальности.
+        </p>
+      </div>
+    </div>
+  </div>
+
 </form>
 
 

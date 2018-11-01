@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Exo+2')
+@import fonts.sass
 
 //colorScheme
 $themeColor_main: #1f48e7
@@ -9,41 +10,23 @@ $themeColor_background_1: #191919
 $themeColor_background_2: #1f1f1f
 $themeColor_text_input_1: rgba(255, 255, 255, 0.4)
 
+@mixin styling($base-width)
+  // your SCSS here, e.g.
+  #Contents
+    width: $base-width
+
+
+@media screen and (max-width: 1170px)
+  @include styling($base-width: 960px)
+
+@media screen and (min-width: 1171px)
+  @include styling($base-width: 1160px)
+
+
 // mixins
-@mixin form_main_text
-  color: #FFFFFF
-  font-family: 'Exo 2', sans-serif
-  font-size: 36px
-  font-weight: 300
-  line-height: 48px
 
-@mixin form_element_text
-  font-family: 'Exo 2', sans-serif
-  color: #FFFFFF
-  font-size: 16px
-  font-weight: 300
-  line-height: 24px
-
-@mixin form_button_active_text
-  color: #FFFFFF
-  font-family: 'Exo 2', sans-serif
-  font-size: 20px
-  font-weight: 300
-  text-align: center
-
-@mixin input_placeholder_text
-  color: rgba(255, 255, 255, 0.4)
-  font-family: 'Exo 2', sans-serif
-  font-size: 16px
-  font-weight: 400
-  line-height: 24px
-
-@mixin input_label_text
-  color: rgba(255, 255, 255, 0.4) !important
-  font-family: 'Exo 2', sans-serif
-  font-size: 12px
-  font-weight: 400
-  line-height: 12px
+//@media screen and (max-width: 575px)
+//@media screen and (min-width: 575px)
 
 
 @mixin rippleEffect
@@ -51,6 +34,7 @@ $themeColor_text_input_1: rgba(255, 255, 255, 0.4)
   overflow: hidden
   transform: translate3d(0, 0, 0)
   z-index: 10000
+
 
   &:after
     content: ""
@@ -74,6 +58,12 @@ $themeColor_text_input_1: rgba(255, 255, 255, 0.4)
     transform: scale(0,0)
     opacity: .2
     transition: 0s
+
+
+
+
+
+
 
 
 //main styles
@@ -112,7 +102,6 @@ header
   display: flex
   flex-wrap: nowrap
   flex-direction: row
-  max-height: 50px
   justify-content: space-between
   padding: 20px 3% 0 3%
 
@@ -136,14 +125,14 @@ header
   display: flex
   flex-direction: row
   flex-wrap: wrap
-  padding: 0 5% 5px 8%
 
-.formTitle > p
-  @include form_main_text
+
 
 .formProjectType_container,
 .formServices_container,
-.formProjectDescription_container
+.formProjectDescription_container,
+.contacts_container,
+.submitForm_wrapper
   padding: 0 5% 5px 8%
   display: flex
   flex-direction: column
@@ -164,36 +153,79 @@ header
 .file_uploader_container
   padding: 0 5% 5px 8%
   display: flex
-  flex-direction: row
+  //flex-direction: row
   margin-top: 3%
 
   label:first-child
     @include form_element_text
     margin-bottom: 5px
 
-.file_upload
+
+.file_uploader_container
+  align-items: baseline
+  margin-top: 5px !important
+
+.uploader_links_wrapper
+  display: flex
+  width: 100%
+  max-width: 704px
+  align-items: flex-start
+
+.file_upload_link,
+.file_uploaded_link
   display: flex
   flex-wrap: nowrap
   flex-direction: row
   align-items: center
   @include form_element_text
+  margin-right: 5%
 
   svg
     margin-right: 5px
+    fill: white
+
+  &:hover
+    cursor: pointer
+    svg
+      cursor: pointer
+
+.file_uploaded_link
+  &:hover
+    svg
+      fill: red
+
+.file_upload_link
+  &:hover
+    svg
+      fill: $themeColor_main
+
+.uploader_description,
+.uploader_description_mobile
+  @include file_uploader_text
 
 
 //buttons
 
+//@function get-btn-width-size($type)
+  @if $type == "min"
+    @return 200px
+  @else if $type == "normal"
+    @return 235px
+  @else
+    @return 290px
+
+//.btn_form.active, .btn_form
+  min-width: @get-btn-width-size('')
+
+//@media screen and (max-width: 575px)
+//@media screen and (min-width: 575px)
+
+
+
 .btn_form.active, .btn_form_project.active
   background-color: $themeColor_main
   border: 1px solid $themeColor_main
-  @include form_button_active_text
-  margin: 20px 20px 20px 0
-  height: 48px
-  min-width: 235px
   border-radius: 4px
-  padding-left: 10px
-  padding-right: 10px
   outline: 0
 
   &:hover
@@ -211,19 +243,11 @@ header
 .btn_form, .btn_form_project
   background-color: $themeColor_second
   border: 1px solid $themeColor_second
-  @include form_button_active_text
-  margin: 20px 20px 20px 0
-  height: 48px
-  min-width: 235px
   border-radius: 4px
-  padding-left: 10px
-  padding-right: 10px
   outline: 0
 
   &:focus
     outline: 0
-
-
 
   &:hover
     background-color: $themeColor_second_hover
@@ -235,11 +259,140 @@ header
 .btn_form, .btn_form_project::-moz-focus-inner
   outline: 0
 
+.btn_submit
+  width: 100%
+  background-color: $themeColor_main
+  border: 1px solid $themeColor_main
+  border-radius: 4px
+
+  &:hover
+    background-color: $themeColor_main_hover
+    border: 1px solid $themeColor_main_hover
+    cursor: pointer
+    outline: 0
 
 
 
-//@media screen and (max-width: 575px)
+//adding different sizes for screens
 
+@media screen and (max-width: 575px)
+  #menuBtn
+    display: none
+
+  header
+    max-height: 10px
+
+  .btn_form.active:first-of-type,
+  .btn_form_project.active:first-of-type,
+  .btn_form:first-of-type, .btn_form_project:first-of-type
+    min-width: 183px !important
+
+
+  .btn_form.active, .btn_form_project.active,
+  .btn_form, .btn_form_project
+    margin: 10px 10px 10px 0
+    height: 38px
+    padding-left: 10px
+    padding-right: 10px
+    min-width: 120px
+    @include form_button_active_text_mobile
+
+  .btn_submit
+
+    height: 64px
+    max-width: 335px
+    @include form_submit_text_mobile
+
+
+  .formProjectType_container,
+  .formServices_container,
+  .formProjectDescription_container,
+  .contacts_container,
+  .submitForm_wrapper,
+  .formTitle
+
+    padding: 0 4% 5px 4%
+
+  .submitForm_wrapper
+    div
+      justify-content: center
+
+  .formTitle > p
+    @include form_main_text_mobile
+
+
+  .formRangeSelectors_container,
+  .file_uploader_container
+    flex-direction: column
+
+  .uploader_links_wrapper,
+  .contacts_container
+    flex-direction: column
+
+  .contacts_container,
+  .formProjectDescription_container
+    div
+      flex-direction: column
+
+  .uploader_description_mobile
+    display: block
+
+  .uploader_description
+    display: none
+
+@media screen and (min-width: 575px)
+
+
+  #menuBtn
+    display: block
+
+  header
+    max-height: 50px
+
+  .btn_form.active:first-of-type,
+  .btn_form_project.active:first-of-type,
+  .btn_form:first-of-type, .btn_form_project:first-of-type
+    min-width: 235px !important
+
+  .btn_form.active, .btn_form_project.active,
+  .btn_form, .btn_form_project
+    margin: 20px 20px 20px 0
+    height: 48px
+    padding-left: 20px
+    padding-right: 20px
+    min-width: 200px
+    @include form_button_active_text
+
+
+  .btn_submit
+    margin-right: 10px
+    height: 60px
+    max-width: 273px
+    @include form_submit_text
+
+  .formProjectType_container,
+  .formServices_container,
+  .formProjectDescription_container,
+  .contacts_container,
+  .submitForm_wrapper,
+  .formTitle
+
+    padding: 0 5% 5px 8%
+
+  .formTitle > p
+    @include form_main_text
+
+  .formRangeSelectors_container,
+  .file_uploader_container
+    flex-direction: row
+
+
+
+  .uploader_description_mobile
+    display: none
+
+  .uploader_description
+    display: block
 
 .ripple
   @include rippleEffect

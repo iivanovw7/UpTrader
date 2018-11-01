@@ -117,19 +117,41 @@ selDeadline_slider.oninput = function() {
   selDeadline_output.innerHTML = this.value + " " + ageSp(this.value);
 };
 
-
+function appendPlaceholder(ID, labelID) {
+  if (ID.value == "") {
+    labelID.style.display = "none";
+  } else {
+    labelID.style.display = "block";
+  }
+}
 
 let projectDesc = document.getElementById("projectDesc");
+let name_input = document.getElementById("name_input");
+let phone_input = document.getElementById("phone_input");
+
 let projectDesc_label = document.getElementById("projectDesc_label");
-let text = document.getElementById("projectDesc").placeholder;
-projectDesc_label.innerHTML = text;
+let name_input_label = document.getElementById("name_input_label");
+let phone_input_label = document.getElementById("phone_input_label");
+
+let projectDesc_placeholder = document.getElementById("projectDesc").placeholder;
+projectDesc_label.innerHTML = projectDesc_placeholder;
+let name_input_placeholder = document.getElementById("name_input").placeholder;
+name_input_label.innerHTML = name_input_placeholder;
+let phone_input_placeholder = document.getElementById("phone_input").placeholder;
+phone_input_label.innerHTML = phone_input_placeholder;
+
 
 projectDesc.oninput = function() {
-
-  if (projectDesc.value == "") {
-    document.getElementById("projectDesc_label").style.display = "none";
-  } else {
-    document.getElementById("projectDesc_label").style.display = "block";
-  }
-
+  appendPlaceholder(projectDesc, projectDesc_label)
 };
+
+name_input.oninput = function() {
+  appendPlaceholder(name_input, name_input_label)
+};
+
+phone_input.oninput = function() {
+  appendPlaceholder(phone_input, phone_input_label)
+};
+
+
+
