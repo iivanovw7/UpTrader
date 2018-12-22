@@ -1,157 +1,134 @@
 import './sass/main.sass';
-import './sass/sliders.sass';
-import './sass/textInput.sass';
+import { TweenMax, TimelineLite } from "gsap/TweenMax";
 
-let menuBtn = document.getElementById('menuBtn');
+let btn_trading = document.getElementById('btn_trading');
+let landing = document.getElementById("landing");
+let btn_wrapper = document.getElementsByClassName('btn_wrapper');
+let mobileElements = document.getElementsByClassName('mobile_view');
+let desktopElements = document.getElementsByClassName('desktop_view');
+let navBlock = document.getElementById('navBlock');
+let mainWrapper = document.getElementById("main_wrapper");
+
+function mobile(){
+  return (
+    landing.offsetWidth < 600
+  )
+}
+
+function renderIfMobile() {
+
+    document.getElementById("page_content").style.width = (
+      mobile() ? '100%' : btn_wrapper[0].offsetWidth * 3
+    );
 
 
-menuBtn.addEventListener('click', () => {
-  let div = document.getElementById('drawer');
+    if(!mobile()) {
+      for (let element of mobileElements) {
+        element.style.display = 'none'
+      }
+    }
 
-  if ( !div.innerHTML ) {
-    div.innerHTML += 'handling menu action';
-  } else div.innerHTML = ''
+    if(mobile()) {
+      for (let element of desktopElements) {
+        element.style.display = 'none'
+      }
 
+      mainWrapper.style.background = 'url(img/_/_/src/img/bg.jpg) center center / 900px 100%';
+    }
+
+}
+
+function getArrow(button) {
+
+  return (
+    button.querySelector('.arrow')
+  )
+
+}
+
+function pageSelected() {
+
+  let tl = new TimelineLite();
+
+
+  if(!mobile()) {
+
+    let stage1 = document.getElementById("landing"),
+      moving = document.getElementById("navBlock");
+
+
+    document.body.style.overflowY = 'hidden';
+
+
+    tl.to(moving, 0.5, {y: -(document.getElementById('btn_trading_text').offsetTop - 30), opacity: 0.5 });
+
+    tl.to(stage1, 0.3, {opacity: 0});
+
+    tl.to(stage1, 0.01, {display: 'none'});
+
+  } else {
+
+    let content = document.getElementById("trading_content_mobile");
+    let newContent = document.getElementById('page_content');
+    let oldContent = document.getElementById('trading');
+    let arrow = getArrow(btn_trading);
+
+
+
+    document.body.style.overflowY = 'scroll';
+
+    if(arrow.classList.contains('opened')) {
+
+      TweenMax.to(getArrow(btn_trading), 1, {rotation:0});
+
+      content.style.overflow = 'hidden';
+      content.style.paddingBottom = '0';
+      mainWrapper.style.height = '100%';
+      mainWrapper.style.background = 'url(img/_/_/src/img/bg.jpg) center center / 900px 100%';
+      //background: url(src/img/photo.png) bottom center / 100% 200px no-repeat;
+
+      let oldheight = content.offsetHeight;
+
+      oldContent.appendChild(newContent);
+
+      TweenMax.fromTo(content, 0.5, { height: oldheight }, { height: content.offsetHeight, clearProps: 'height' });
+
+      arrow.classList.remove('opened');
+      return
+
+    }
+
+    TweenMax.to(getArrow(btn_trading), 1, {rotation:180});
+
+    content.style.overflow = 'hidden';
+    content.style.paddingBottom = '200px';
+
+    mainWrapper.style.height = navBlock.offsetHeight * 4.3;
+    mainWrapper.style.background = 'url(src/img/trading_mobile.jpg)';
+    content.style.background = 'url(src/img/photo.png) bottom center / 100% 200px no-repeat';
+
+
+    let oldheight = content.offsetHeight;
+    content.appendChild(newContent);
+
+    TweenMax.fromTo(content, 0.5, { height: oldheight }, { height: content.offsetHeight, clearProps: 'height' });
+
+
+    arrow.classList.add('opened')
+
+  }
+
+}
+
+
+renderIfMobile();
+
+
+btn_trading.addEventListener('click', () => {
+
+  pageSelected()
 
 });
-
-
-let btnForm = document.getElementsByClassName('btn_form');
-let btnFormProject = document.getElementsByClassName('btn_form_project');
-
-
-for (let i = 0; i < btnForm.length; i++) {
-  btnForm[i].addEventListener('click', () => {
-
-    if (btnForm[i].classList == 'btn_form') {
-      btnForm[i].classList.add('active')
-    } else  {
-      btnForm[i].classList.remove('active')
-    }
-
-
-  });
-}
-
-
-
-for (let i = 0; i < btnFormProject.length; i++) {
-  btnFormProject[i].addEventListener('click', () => {
-
-    for (let i = 0; i < btnFormProject.length; i++) {
-      btnFormProject[i].classList.remove('active')
-    }
-
-    if (btnFormProject[i].classList == 'btn_form_project') {
-      console.log('adding')
-      btnFormProject[i].classList.add('active')
-    }
-
-
-  });
-}
-
-window.addEventListener("load", function() {
-  document.getElementById("form").addEventListener("submit", function(event) {
-    event.target.checkValidity();
-    event.preventDefault(); // Prevent form submission and contact with server
-    event.stopPropagation();
-  }, false);
-}, false);
-
-let selDeadline = document.getElementById("selDeadline");
-let selBudget = document.getElementById("selBudget");
-
-//setting current slider value to styles prop
-selDeadline.addEventListener("input", function() {
-  selDeadline.style.setProperty("--val", + selDeadline.value);
-}, false);
-
-selBudget.addEventListener("input", function() {
-  selBudget.style.setProperty("--val", + selBudget.value);
-}, false);
-
-//budget selector
-let selBudget_slider = document.getElementById("selBudget");
-let selBudget_output = document.getElementById("selBudget_result");
-selBudget_output.innerHTML = "до 1 млн";
-
-selBudget_slider.oninput = function() {
-  let i = this.value;
-  console.log(i);
-
-  switch(true) {
-    case (i == 1):
-      selBudget_output.innerHTML = "до 1 млн";
-      break;
-    case (i == 2):
-      selBudget_output.innerHTML = "1-5 млн";
-      break;
-    case (i == 3):
-      selBudget_output.innerHTML = "> 5 млн";
-      break;
-    default:
-      selBudget_output.innerHTML = "до 1 млн";
-  }
-
-};
-
-//deadline selector
-let selDeadline_slider = document.getElementById("selDeadline");
-let selDeadline_output = document.getElementById("selDeadline_result");
-
-function ageSp(index) {
-  let text = 'месяцев';
-
-  ((index % 100) <= 20) && (index % 100) >= 5 ? (text = 'месяцев') :
-    (index % 10) == 1 ? (text = 'месяц') :
-      ((index % 10) >= 2) && ((index % 10) <= 4) ? (text = 'месяца') :
-        (text = 'месяцев');
-
-  return text;
-};
-
-selDeadline_output.innerHTML = selDeadline_slider.value + " " + ageSp(selDeadline_slider.value);
-
-selDeadline_slider.oninput = function() {
-  selDeadline_output.innerHTML = this.value + " " + ageSp(this.value);
-};
-
-function appendPlaceholder(ID, labelID) {
-  if (ID.value == "") {
-    labelID.style.display = "none";
-  } else {
-    labelID.style.display = "block";
-  }
-}
-
-let projectDesc = document.getElementById("projectDesc");
-let name_input = document.getElementById("name_input");
-let phone_input = document.getElementById("phone_input");
-
-let projectDesc_label = document.getElementById("projectDesc_label");
-let name_input_label = document.getElementById("name_input_label");
-let phone_input_label = document.getElementById("phone_input_label");
-
-let projectDesc_placeholder = document.getElementById("projectDesc").placeholder;
-projectDesc_label.innerHTML = projectDesc_placeholder;
-let name_input_placeholder = document.getElementById("name_input").placeholder;
-name_input_label.innerHTML = name_input_placeholder;
-let phone_input_placeholder = document.getElementById("phone_input").placeholder;
-phone_input_label.innerHTML = phone_input_placeholder;
-
-
-projectDesc.oninput = function() {
-  appendPlaceholder(projectDesc, projectDesc_label)
-};
-
-name_input.oninput = function() {
-  appendPlaceholder(name_input, name_input_label)
-};
-
-phone_input.oninput = function() {
-  appendPlaceholder(phone_input, phone_input_label)
-};
 
 
 
