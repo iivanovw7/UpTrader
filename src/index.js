@@ -1,5 +1,12 @@
 import './sass/main.sass';
 import { TweenMax, TimelineLite } from "gsap/TweenMax";
+import mobileBg from "./img/trading_mobile.jpg";
+import photo from "./img/photo.png";
+import icon1 from "./img/icon1.png";
+import icon2 from "./img/icon2.png";
+import icon3 from "./img/icon3.png";
+import tick from "./img/tick.svg";
+import tick2 from "./img/tick2.svg";
 
 let btn_trading = document.getElementById('btn_trading');
 let landing = document.getElementById("landing");
@@ -33,7 +40,7 @@ function renderIfMobile() {
         element.style.display = 'none'
       }
 
-      mainWrapper.style.background = 'url(img/_/_/src/img/bg.jpg) center center / 900px 100%';
+      mainWrapper.style.background = `url(./src/img/bg.jpg) center center / 900px 100%`;
     }
 
 }
@@ -84,8 +91,7 @@ function pageSelected() {
       content.style.overflow = 'hidden';
       content.style.paddingBottom = '0';
       mainWrapper.style.height = '100%';
-      mainWrapper.style.background = 'url(img/_/_/src/img/bg.jpg) center center / 900px 100%';
-      //background: url(src/img/photo.png) bottom center / 100% 200px no-repeat;
+      mainWrapper.style.background = 'url(./src/img/bg.jpg) center center / 900px 100%';
 
       let oldheight = content.offsetHeight;
 
@@ -104,8 +110,8 @@ function pageSelected() {
     content.style.paddingBottom = '200px';
 
     mainWrapper.style.height = navBlock.offsetHeight * 4.3;
-    mainWrapper.style.background = 'url(src/img/trading_mobile.jpg)';
-    content.style.background = 'url(src/img/photo.png) bottom center / 100% 200px no-repeat';
+    mainWrapper.style.background = 'url(./src/img/trading_mobile.jpg)';
+    content.style.background = 'url(./src/img/photo.png) bottom center / 100% 200px no-repeat';
 
 
     let oldheight = content.offsetHeight;
